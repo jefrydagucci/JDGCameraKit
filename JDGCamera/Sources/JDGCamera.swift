@@ -15,10 +15,13 @@ class JDGCamera: UIViewController {
     let toolbarView = UIView()
     
     var recordButtonColor:UIColor = UIColor.blue
-    var recordButtonImage:UIImage?
+    var recordButtonImage:UIImage?{
+        didSet{
+            recordButton?.setImage(recordButtonImage, for: .normal)
+        }
+    }
     
-//    MARK:Property
-    
+    private var recordButton:SDRecordButton?
     
 //    MARK:View
     override func viewDidLoad() {
@@ -67,6 +70,8 @@ class JDGCamera: UIViewController {
             btn.buttonColor = UIColor.clear
             btn.setImage(btnImg, for: .normal)
         }
+        
+        recordButton = btn
         
         if !toolbarView.subviews.contains(btn){
             toolbarView.addSubview(btn)
