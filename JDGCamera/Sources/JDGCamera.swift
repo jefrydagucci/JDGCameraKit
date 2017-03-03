@@ -21,7 +21,15 @@ class JDGCamera: UIViewController {
         }
     }
     
+    var captureButtonColor:UIColor = UIColor.white
+    var captureButtonImage:UIImage?{
+        didSet{
+            captureButton?.setImage(captureButtonImage, for: .normal)
+        }
+    }
+    
     private var recordButton:SDRecordButton?
+    private var captureButton:UIButton?
     
 //    MARK:View
     override func viewDidLoad() {
@@ -65,6 +73,7 @@ class JDGCamera: UIViewController {
     func setupRecordingButton(){
         let frame = CGRect( x: 0, y: 0, width: 60, height: 60)
         let btn = SDRecordButton(frame: frame)
+        captureButton = UIButton(frame: frame)
         btn.buttonColor = recordButtonColor
         if let btnImg = recordButtonImage{
             btn.buttonColor = UIColor.clear
@@ -81,6 +90,16 @@ class JDGCamera: UIViewController {
         let centerX = toolbarFrame.size.width/2
         let centerY = toolbarFrame.size.height/2
         btn.center  = CGPoint( x: centerX, y: centerY)
+        
+        if let captureButton = captureButton{
+            captureButton.layer.cornerRadius    = captureButton.frame.size.width * 0.5
+            captureButton.layer.masksToBounds   = true
+            captureButton.center                = btn.center
+            captureButton.backgroundColor       = captureButtonColor
+            if let btnImg = captureButtonImage{
+                captureButton.setImage(btnImg, for: .normal)
+            }
+        }
     }
     
 }
