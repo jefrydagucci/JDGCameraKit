@@ -293,7 +293,7 @@ class JDGCamera: UIViewController {
     func record(){
         do {
             let docDir  = try FileManager.default.url(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask, appropriateFor: nil, create: true)
-            var fileURL = docDir.appendingPathComponent("temp")
+            var fileURL = docDir.appendingPathComponent("JDGCameraTemp")
             
             var idx:Int = 1
             while FileManager.default.fileExists(atPath: fileURL.path) {
