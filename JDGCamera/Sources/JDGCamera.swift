@@ -10,19 +10,19 @@ import UIKit
 import LLSimpleCamera
 import SDRecordButton
 import IoniconsSwift
+import UIImage_Additions
 
 class JDGCamera: UIViewController {
     
     let toolbarView = UIView()
     
-    var recordButtonColor:UIColor = UIColor.blue
+    var recordButtonColor:UIColor = UIColor.white
     var recordButtonImage:UIImage?{
         didSet{
             recordButton?.setImage(recordButtonImage, for: .normal)
         }
     }
     
-    var captureButtonColor:UIColor = UIColor.white
     var captureButtonImage:UIImage?{
         didSet{
             captureButton?.setImage(captureButtonImage, for: .normal)
@@ -95,7 +95,7 @@ class JDGCamera: UIViewController {
         guard let captureButton = captureButton else{ return }
         captureButton.layer.cornerRadius    = captureButton.frame.size.width * 0.5
         captureButton.layer.masksToBounds   = true
-        captureButton.setBackgroundImage(Ionicons.iosCircleFilled.image(captureButton.frame.size.width), for: .normal)
+        captureButton.setBackgroundImage(Ionicons.iosCircleFilled.image(captureButton.frame.size.width).add_tintedImage(with: .white, style: ADDImageTintStyleKeepingAlpha), for: .normal)
         if let btnImg = captureButtonImage{
             captureButton.setImage(btnImg, for: .normal)
         }
