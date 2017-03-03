@@ -91,15 +91,17 @@ class JDGCamera: UIViewController {
         let centerY = toolbarFrame.size.height/2
         btn.center  = CGPoint( x: centerX, y: centerY)
         
-        if let captureButton = captureButton{
-            captureButton.layer.cornerRadius    = captureButton.frame.size.width * 0.5
-            captureButton.layer.masksToBounds   = true
-            captureButton.center                = btn.center
-            captureButton.backgroundColor       = captureButtonColor
-            if let btnImg = captureButtonImage{
-                captureButton.setImage(btnImg, for: .normal)
-            }
+        guard let captureButton = captureButton else{ return }
+        captureButton.layer.cornerRadius    = captureButton.frame.size.width * 0.5
+        captureButton.layer.masksToBounds   = true
+        captureButton.backgroundColor       = captureButtonColor
+        if let btnImg = captureButtonImage{
+            captureButton.setImage(btnImg, for: .normal)
         }
+        if !toolbarView.subviews.contains(captureButton){
+            toolbarView.addSubview(captureButton)
+        }
+        captureButton.center = btn.center
     }
     
 }
