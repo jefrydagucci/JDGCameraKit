@@ -28,8 +28,9 @@ class JDGCamera: UIViewController {
     
     var recordButton:SDRecordButton?
     private var flashButton:UIButton? = UIButton()
+    private var cameraModeButton:UIButton? = UIButton()
     
-    var recordButtonWidth  = 80
+    var recordButtonWidth  = 90
     
     var cameraPosition:LLCameraPosition = LLCameraPositionRear
     var cameraDelegate:JDGCameraDelegate?
@@ -87,6 +88,7 @@ class JDGCamera: UIViewController {
     func setupTopToolbar(){
         self.setupTopToolbarView()
         self.setupFlashButton()
+        self.setupCameraModeButton()
     }
     
     func setupBottomToolbarView(){
@@ -103,7 +105,7 @@ class JDGCamera: UIViewController {
     let topToolbarButtonWidth:CGFloat   = 35
     func setupTopToolbarView(){
         let screenBound = UIScreen.main.bounds
-        let height:CGFloat = topToolbarButtonWidth * 2.5
+        let height:CGFloat = topToolbarButtonWidth * 3.5
         topToolbarView.frame = CGRect( x: 0, y: 0, width: screenBound.size.width, height: height)
         topToolbarView.autoresizingMask    = [.flexibleWidth, .flexibleTopMargin]
         
@@ -146,13 +148,32 @@ class JDGCamera: UIViewController {
             if !topToolbarView.subviews.contains(flashButton){ topToolbarView.addSubview(flashButton) }
             
             let toolbarFrame = topToolbarView.frame
-            flashButton.center  = CGPoint( x: 50, y: toolbarFrame.size.height * 0.5)
+            flashButton.center  = CGPoint( x: topToolbarButtonWidth * 2, y: toolbarFrame.size.height * 0.5)
             
             flashButton.setImage(Ionicons.flashOff.image(frame.size.width).add_tintedImage(with: .white, style: ADDImageTintStyleKeepingAlpha), for: .normal)
             flashButton.setImage(Ionicons.flash.image(frame.size.width).add_tintedImage(with: .white, style: ADDImageTintStyleKeepingAlpha), for: .selected)
             
             flashButton.removeTarget(self, action: nil, for: .allEvents)
             flashButton.addTarget(self, action: #selector(toggleFlash), for: .touchUpInside)
+        }
+    }
+    
+    @objc private func setupCameraModeButton(){
+        if(LLSimpleCamera.isRearCameraAvailable() && LLSimpleCamera.isFrontCameraAvailable()){
+        
+            let flashButtonFrame = flashButton?.frame ?? CGRect( x: topToolbarButtonWidth, y: 0, width: 0, height: 0)
+            let frame = CGRect( x: flashButtonFrame.origin.x + flashButtonFrame.size.width + topToolbarButtonWidth, y: 0, width: topToolbarButtonWidth, height: topToolbarButtonWidth)
+            guard let cameraModeButton = cameraModeButton else{ return }
+            cameraModeButton.frame = frame
+            if !topToolbarView.subviews.contains(cameraModeButton){ topToolbarView.addSubview(cameraModeButton) }
+            
+            let toolbarFrame = topToolbarView.frame
+            cameraModeButton.center  = CGPoint( x: UIScreen.main.bounds.size.width - (topToolbarButtonWidth * 2), y: toolbarFrame.size.height * 0.5)
+            
+            cameraModeButton.setImage(Ionicons.iosReverseCamera.image(frame.size.width).add_tintedImage(with: .white, style: ADDImageTintStyleKeepingAlpha), for: .normal)
+            
+            cameraModeButton.removeTarget(self, action: nil, for: .allEvents)
+            cameraModeButton.addTarget(self, action: #selector(toggleCameraPosition), for: .touchUpInside)
         }
     }
     
@@ -195,6 +216,11 @@ class JDGCamera: UIViewController {
         flashButton.isSelected  = !flashButton.isSelected
         
         _ = camera?.updateFlashMode(flashButton.isSelected ? LLCameraFlashOn : LLCameraFlashOff)
+    }
+    
+    func toggleCameraPosition(){
+        guard let camera = camera else{ return }
+        camera.togglePosition()
     }
     
     @objc private func recordButtonTapDown(){
