@@ -9,6 +9,7 @@
 import UIKit
 import LLSimpleCamera
 import SDRecordButton
+import IoniconsSwift
 
 class JDGCamera: UIViewController {
     
@@ -94,7 +95,7 @@ class JDGCamera: UIViewController {
         guard let captureButton = captureButton else{ return }
         captureButton.layer.cornerRadius    = captureButton.frame.size.width * 0.5
         captureButton.layer.masksToBounds   = true
-        captureButton.backgroundColor       = captureButtonColor
+        captureButton.setBackgroundImage(Ionicons.iosCircleFilled.image(captureButton.frame.size.width), for: .normal)
         if let btnImg = captureButtonImage{
             captureButton.setImage(btnImg, for: .normal)
         }
