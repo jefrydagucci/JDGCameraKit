@@ -20,12 +20,14 @@ protocol JDGCameraDelegate {
 class JDGCamera: UIViewController {
     
     private let toolbarView = UIView()
+    private let topToolbarView = UIView()
     
     var defaultRecordButtonColor:UIColor = UIColor.white
     var defaultProgressColor:UIColor = UIColor.red
     var defaultRecordButtonImage:UIImage?
     
     var recordButton:SDRecordButton?
+    private var flashButton:UIButton? = UIButton()
     
     var recordButtonWidth  = 80
     
@@ -63,9 +65,12 @@ class JDGCamera: UIViewController {
                             camera.attach(to: self, withFrame: CGRect( x: 0, y: 0, width: bound.size.width, height: bound.size.height))
                             camera.start()
                             
-                            self.setupBottomToolbar()
-                            camera.view.sendSubview(toBack: self.toolbarView)
                             self.camera = camera
+                            
+                            self.setupBottomToolbar()
+                            self.setupTopToolbar()
+                            camera.view.sendSubview(toBack: self.toolbarView)
+                            camera.view.sendSubview(toBack: self.topToolbarView)
                         }
                     }
                     
@@ -79,6 +84,11 @@ class JDGCamera: UIViewController {
         self.setupButton()
     }
     
+    func setupTopToolbar(){
+        self.setupTopToolbarView()
+        self.setupFlashButton()
+    }
+    
     func setupBottomToolbarView(){
         let screenBound = UIScreen.main.bounds
         let height:CGFloat = 150
@@ -87,6 +97,18 @@ class JDGCamera: UIViewController {
         
         if !self.view.subviews.contains(toolbarView){
             self.view.addSubview(toolbarView)
+        }
+    }
+    
+    let topToolbarButtonWidth:CGFloat   = 35
+    func setupTopToolbarView(){
+        let screenBound = UIScreen.main.bounds
+        let height:CGFloat = topToolbarButtonWidth * 2.5
+        topToolbarView.frame = CGRect( x: 0, y: 0, width: screenBound.size.width, height: height)
+        topToolbarView.autoresizingMask    = [.flexibleWidth, .flexibleTopMargin]
+        
+        if !self.view.subviews.contains(topToolbarView){
+            self.view.addSubview(topToolbarView)
         }
     }
     
@@ -113,6 +135,25 @@ class JDGCamera: UIViewController {
         let centerY = toolbarFrame.size.height/2
         btn.center  = CGPoint( x: centerX, y: centerY)
         recordButton = btn
+    }
+    
+    @objc private func setupFlashButton(){
+        guard let camera = camera else{ return }
+        if(camera.isFlashAvailable()){
+            let frame = CGRect( x: 0, y: 0, width: topToolbarButtonWidth, height: topToolbarButtonWidth)
+            guard let flashButton = flashButton else{ return }
+            flashButton.frame = frame
+            if !topToolbarView.subviews.contains(flashButton){ topToolbarView.addSubview(flashButton) }
+            
+            let toolbarFrame = topToolbarView.frame
+            flashButton.center  = CGPoint( x: 50, y: toolbarFrame.size.height * 0.5)
+            
+            flashButton.setImage(Ionicons.flashOff.image(frame.size.width).add_tintedImage(with: .white, style: ADDImageTintStyleKeepingAlpha), for: .normal)
+            flashButton.setImage(Ionicons.flash.image(frame.size.width).add_tintedImage(with: .white, style: ADDImageTintStyleKeepingAlpha), for: .selected)
+            
+            flashButton.removeTarget(self, action: nil, for: .allEvents)
+            flashButton.addTarget(self, action: #selector(toggleFlash), for: .touchUpInside)
+        }
     }
     
     @objc private func setupButtonAction(){
@@ -148,6 +189,13 @@ class JDGCamera: UIViewController {
     }
     
 //    MARK:Action
+    
+    func toggleFlash(){
+        guard let flashButton = flashButton else{ return }
+        flashButton.isSelected  = !flashButton.isSelected
+        
+        _ = camera?.updateFlashMode(flashButton.isSelected ? LLCameraFlashOn : LLCameraFlashOff)
+    }
     
     @objc private func recordButtonTapDown(){
         let isRepeat = false
