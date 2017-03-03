@@ -26,7 +26,7 @@ class JDGCamera: UIViewController {
     var defaultProgressColor:UIColor = UIColor.red
     var defaultRecordButtonImage:UIImage?
     
-    var recordButton:SDRecordButton?
+    public private(set) var recordButton:SDRecordButton?
     private var flashButton:UIButton? = UIButton()
     private var cameraModeButton:UIButton? = UIButton()
     
@@ -79,18 +79,18 @@ class JDGCamera: UIViewController {
         })
     }
     
-    func setupBottomToolbar(){
+    @objc private func setupBottomToolbar(){
         self.setupBottomToolbarView()
         self.setupButton()
     }
     
-    func setupTopToolbar(){
+    @objc private func setupTopToolbar(){
         self.setupTopToolbarView()
         self.setupFlashButton()
         self.setupCameraModeButton()
     }
     
-    func setupBottomToolbarView(){
+    @objc private func setupBottomToolbarView(){
         let screenBound = UIScreen.main.bounds
         let height:CGFloat = 150
         toolbarView.frame = CGRect( x: 0, y: screenBound.size.height - height, width: screenBound.size.width, height: height)
@@ -102,7 +102,7 @@ class JDGCamera: UIViewController {
     }
     
     let topToolbarButtonWidth:CGFloat   = 35
-    func setupTopToolbarView(){
+    @objc private func setupTopToolbarView(){
         let screenBound = UIScreen.main.bounds
         let height:CGFloat = topToolbarButtonWidth * 3.5
         topToolbarView.frame = CGRect( x: 0, y: 0, width: screenBound.size.width, height: height)
@@ -113,7 +113,7 @@ class JDGCamera: UIViewController {
         }
     }
     
-    func setupButton(){
+    @objc private func setupButton(){
         self.setupRecordingButton()
         self.setupButtonAction()
     }
@@ -188,7 +188,7 @@ class JDGCamera: UIViewController {
     }
     
 //    MARK:Timer
-    func startRecordingTimer(){
+    @objc private func startRecordingTimer(){
         let isRepeat = true
         DispatchQueue.main.async {
             if #available(iOS 10.0, *) {
@@ -269,15 +269,20 @@ class JDGCamera: UIViewController {
     func captureOrStopRecord(){
         guard let camera = camera else { return }
         if (camera.isRecording){
-            camera.stopRecording()
-            
-            currentRecordingProgress = 0
-            self.timerRecording?.invalidate()
+            self.stopRecording()
         }
         else{
             self.cancelWillStartRecording()
             self.capture()
         }
+    }
+    
+    func stopRecording(){
+        currentRecordingProgress = 0
+        self.timerRecording?.invalidate()
+        
+        guard let camera = camera else { return }
+        camera.stopRecording()
     }
     
     @objc private func endRecording(){
