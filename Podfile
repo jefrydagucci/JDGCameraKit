@@ -9,6 +9,7 @@ pod 'DBCamera'
 pod 'LLSimpleCamera'
 pod 'SDRecordButton'
 pod 'IoniconsSwift', '~> 2.1.4'
+pod 'UIImage+Additions'
 
   # Pods for JDGCamera
 
