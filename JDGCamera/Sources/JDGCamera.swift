@@ -207,6 +207,9 @@ class JDGCamera: UIViewController {
         
         if(currentRecordingProgress >= maximumRecordingDuration){
             self.captureOrStopRecord()
+            guard let recordButton  = recordButton else{ return }
+            recordButton.endTracking(nil, with: nil)
+            recordButton.sendActions(for: .touchUpOutside)
         }
         currentRecordingProgress += progressTimeRepeatingValue
         btn.setProgress(currentRecordingProgress/maximumRecordingDuration)
