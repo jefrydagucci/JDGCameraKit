@@ -32,7 +32,6 @@ class JDGCamera: UIViewController {
     
     var recordButtonWidth  = 90
     
-    var cameraPosition:LLCameraPosition = LLCameraPositionRear
     var cameraDelegate:JDGCameraDelegate?
     
     private var camera:LLSimpleCamera?
@@ -59,7 +58,7 @@ class JDGCamera: UIViewController {
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: DispatchTime.now().rawValue + (3 * 1000000)), execute: {
             LLSimpleCamera.requestPermission { (permitted) in
                 if(permitted){
-                    if let camera = LLSimpleCamera( quality: AVCaptureSessionPresetMedium, position: self.cameraPosition, videoEnabled: true){
+                    if let camera = LLSimpleCamera( quality: AVCaptureSessionPresetMedium, position: LLCameraPositionRear, videoEnabled: true){
                         let bound = UIScreen.main.bounds
                         
                         DispatchQueue.main.async {
