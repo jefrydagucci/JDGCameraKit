@@ -21,15 +21,13 @@ class JDGCamera: UIViewController {
     
     private let toolbarView = UIView()
     
-    var defaultRecordButtonColor:UIColor = UIColor.clear
+    var defaultRecordButtonColor:UIColor = UIColor.white
+    var defaultProgressColor:UIColor = UIColor.red
     var defaultRecordButtonImage:UIImage?
     
-    var defaultCaptureButtonImage:UIImage?
-    
     var recordButton:SDRecordButton?
-    var captureButton:UIButton?
     
-    var captureButtonWidth  = 70
+    var recordButtonWidth  = 80
     
     var cameraPosition:LLCameraPosition = LLCameraPositionRear
     var cameraDelegate:JDGCameraDelegate?
@@ -37,9 +35,13 @@ class JDGCamera: UIViewController {
     private var camera:LLSimpleCamera?
     
     private var timerRecording:Timer?
+    private var timerLongPress:Timer?
     
     private let progressTimeRepeatingValue:CGFloat  = 0.05
     var maximumRecordingDuration:CGFloat    = 60
+    var recordingDelay:CGFloat  = 1.5
+    
+    private var currentRecordingProgress:CGFloat  = 0
     
 //    MARK:View
     override func viewDidLoad() {
@@ -79,7 +81,7 @@ class JDGCamera: UIViewController {
     
     func setupBottomToolbarView(){
         let screenBound = UIScreen.main.bounds
-        let height:CGFloat = 120
+        let height:CGFloat = 150
         toolbarView.frame = CGRect( x: 0, y: screenBound.size.height - height, width: screenBound.size.width, height: height)
         toolbarView.autoresizingMask    = [.flexibleWidth, .flexibleBottomMargin]
         
@@ -94,17 +96,14 @@ class JDGCamera: UIViewController {
     }
     
     @objc private func setupRecordingButton(){
-        let frame = CGRect( x: 0, y: 0, width: captureButtonWidth, height: captureButtonWidth)
+        let frame = CGRect( x: 0, y: 0, width: recordButtonWidth, height: recordButtonWidth)
         let btn = SDRecordButton(frame: frame)
-        captureButton = UIButton(frame: frame)
         btn.buttonColor = defaultRecordButtonColor
         if let btnImg = defaultRecordButtonImage{
             btn.buttonColor = UIColor.clear
             btn.setImage(btnImg, for: .normal)
         }
-        
-        recordButton = btn
-        
+        btn.progressColor   = defaultProgressColor
         if !toolbarView.subviews.contains(btn){
             toolbarView.addSubview(btn)
         }
@@ -113,66 +112,63 @@ class JDGCamera: UIViewController {
         let centerX = toolbarFrame.size.width/2
         let centerY = toolbarFrame.size.height/2
         btn.center  = CGPoint( x: centerX, y: centerY)
-        
-        guard let captureButton = captureButton else{ return }
-        captureButton.layer.cornerRadius    = captureButton.frame.size.width * 0.5
-        captureButton.layer.masksToBounds   = true
-        captureButton.setBackgroundImage(Ionicons.iosCircleFilled.image(captureButton.frame.size.width).add_tintedImage(with: .white, style: ADDImageTintStyleKeepingAlpha), for: .normal)
-        if let btnImg = defaultCaptureButtonImage{
-            captureButton.setImage(btnImg, for: .normal)
-        }
-        if !toolbarView.subviews.contains(captureButton){
-            toolbarView.addSubview(captureButton)
-        }
-        captureButton.center = btn.center
+        recordButton = btn
     }
     
     @objc private func setupButtonAction(){
-        if let captureButton = captureButton{
-            let longPress = UILongPressGestureRecognizer( target: self, action: #selector(captureLongPress))
-            longPress.minimumPressDuration  = 1.5
-            longPress.numberOfTapsRequired  = 1
-            
-            captureButton.addGestureRecognizer(longPress)
-            captureButton.addTarget(self, action: #selector(capture), for: .touchUpInside)
-        }
-        if let recordButton     = recordButton{
-            recordButton.addTarget(self, action: #selector(startRecording), for: .touchDown)
-            recordButton.addTarget(self, action: #selector(stopRecording), for: .touchUpInside)
-            recordButton.addTarget(self, action: #selector(stopRecording), for: .touchUpOutside)
-        }
+        self.setupRecordButtonAction()
+    }
+    
+    @objc private func setupRecordButtonAction(){
+        guard let recordButton     = recordButton else{ return }
+        recordButton.addTarget(self, action: #selector(recordButtonTapDown), for: .touchDown)
+        recordButton.addTarget(self, action: #selector(captureOrStopRecord), for: .touchUpInside)
+        recordButton.addTarget(self, action: #selector(captureOrStopRecord), for: .touchUpOutside)
     }
     
 //    MARK:Timer
     func startRecordingTimer(){
-        if let timer = timerRecording{
-            timer.fire()
-        }
-        else{
+        let isRepeat = true
+        DispatchQueue.main.async {
             if #available(iOS 10.0, *) {
-                timerRecording  = Timer( timeInterval: TimeInterval(progressTimeRepeatingValue), repeats: true, block: { (timer:Timer) in
+                self.timerRecording  = Timer.scheduledTimer(withTimeInterval: TimeInterval(self.progressTimeRepeatingValue), repeats: isRepeat, block: { (timer:Timer) in
                     self.updateRecordingProgress()
                 })
             } else {
-                timerRecording  = Timer( timeInterval: TimeInterval(progressTimeRepeatingValue), target: self, selector: #selector(updateRecordingProgress), userInfo: nil, repeats: true)
+                self.timerRecording  = Timer.scheduledTimer(timeInterval: TimeInterval(self.progressTimeRepeatingValue), target: self, selector: #selector(self.updateRecordingProgress), userInfo: nil, repeats: isRepeat)
             }
         }
     }
     
     @objc private func updateRecordingProgress(){
         guard let btn = recordButton else{ return }
-        btn.setProgress(progressTimeRepeatingValue/maximumRecordingDuration)
+        
+        currentRecordingProgress += progressTimeRepeatingValue
+        btn.setProgress(currentRecordingProgress/maximumRecordingDuration)
     }
     
 //    MARK:Action
     
+    @objc private func recordButtonTapDown(){
+        let isRepeat = false
+        DispatchQueue.main.async {
+            if #available(iOS 10.0, *) {
+                self.timerLongPress  = Timer.scheduledTimer(withTimeInterval: TimeInterval(self.recordingDelay), repeats: isRepeat, block: { (timer:Timer) in
+                    self.captureLongPress()
+                })
+            } else {
+                self.timerLongPress  = Timer.scheduledTimer(timeInterval: TimeInterval(self.recordingDelay), target: self, selector: #selector(self.captureLongPress), userInfo: nil, repeats: isRepeat)
+            }
+        }
+    }
+    
+    @objc private func cancelWillStartRecording(){
+        timerLongPress?.invalidate()
+        timerLongPress  = nil
+    }
+    
     @objc private func captureLongPress(){
-        if let captureButton    = captureButton{
-            captureButton.sendActions(for: .touchUpOutside)
-        }
-        if let recordButton     = recordButton{
-            recordButton.sendActions(for: .touchDown)
-        }
+        self.startRecording()
     }
     
     func capture(){
@@ -191,9 +187,27 @@ class JDGCamera: UIViewController {
         }
     }
     
-    func stopRecording(){
+    func captureOrStopRecord(){
+        guard let camera = camera else { return }
+        if (camera.isRecording){
+            camera.stopRecording()
+            
+            currentRecordingProgress = 0
+            self.timerRecording?.invalidate()
+        }
+        else{
+            self.cancelWillStartRecording()
+            self.capture()
+        }
+    }
+    
+    @objc private func endRecording(){
         guard let camera = camera else { return }
         camera.stopRecording()
+        self.timerRecording?.invalidate()
+        currentRecordingProgress = 0
+        guard let btn = recordButton else{ return }
+        btn.setProgress(currentRecordingProgress)
     }
     
     func record(){
@@ -211,13 +225,14 @@ class JDGCamera: UIViewController {
             let videoFilePath = fileURL.appendingPathExtension("mp4")
             
             guard let camera = self.camera else{ return }
-            if(!camera.isRecording){
-                camera.startRecording(withOutputUrl: videoFilePath, didRecord: { (camera:LLSimpleCamera?, url:URL?, error:Error?) in
-                    
-                    guard let delegate = self.cameraDelegate else{ return }
-                    delegate.jdg_cameraDidRecord(url, error)
-                })
-            }
+            self.startRecordingTimer()
+            camera.startRecording(withOutputUrl: videoFilePath, didRecord: { (camera:LLSimpleCamera?, url:URL?, error:Error?) in
+                
+                self.endRecording()
+                guard let delegate = self.cameraDelegate else{ return }
+                delegate.jdg_cameraDidRecord(url, error)
+                
+            })
         } catch let error {
             print(error.localizedDescription)
         }
