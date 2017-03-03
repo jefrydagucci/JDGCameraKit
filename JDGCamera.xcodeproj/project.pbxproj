@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		79DA409885AEECCD7D6530E9 /* Pods_JDGCamera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EE0022F4D253AC0428F7351 /* Pods_JDGCamera.framework */; };
 		AD360D4A1E691E7D003FFCA4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD360D491E691E7D003FFCA4 /* AppDelegate.swift */; };
 		AD360D4C1E691E7D003FFCA4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD360D4B1E691E7D003FFCA4 /* ViewController.swift */; };
 		AD360D4F1E691E7D003FFCA4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD360D4D1E691E7D003FFCA4 /* Main.storyboard */; };
@@ -15,6 +16,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0EE0022F4D253AC0428F7351 /* Pods_JDGCamera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JDGCamera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		355017C6416FEC5CBEDBB81E /* Pods-JDGCamera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JDGCamera.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JDGCamera/Pods-JDGCamera.debug.xcconfig"; sourceTree = "<group>"; };
+		7719FAEA240BFB7A92E2FF7B /* Pods-JDGCamera.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JDGCamera.release.xcconfig"; path = "Pods/Target Support Files/Pods-JDGCamera/Pods-JDGCamera.release.xcconfig"; sourceTree = "<group>"; };
 		AD360D461E691E7D003FFCA4 /* JDGCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JDGCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD360D491E691E7D003FFCA4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD360D4B1E691E7D003FFCA4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -29,17 +33,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79DA409885AEECCD7D6530E9 /* Pods_JDGCamera.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		077AF8048DB8C5B8C8B16575 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0EE0022F4D253AC0428F7351 /* Pods_JDGCamera.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6DADD7E899A9197199201FFC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				355017C6416FEC5CBEDBB81E /* Pods-JDGCamera.debug.xcconfig */,
+				7719FAEA240BFB7A92E2FF7B /* Pods-JDGCamera.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		AD360D3D1E691E7D003FFCA4 = {
 			isa = PBXGroup;
 			children = (
 				AD360D481E691E7D003FFCA4 /* JDGCamera */,
 				AD360D471E691E7D003FFCA4 /* Products */,
+				6DADD7E899A9197199201FFC /* Pods */,
+				077AF8048DB8C5B8C8B16575 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,9 +95,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AD360D581E691E7D003FFCA4 /* Build configuration list for PBXNativeTarget "JDGCamera" */;
 			buildPhases = (
+				D83E0CE0831C6686E4108B5B /* [CP] Check Pods Manifest.lock */,
 				AD360D421E691E7D003FFCA4 /* Sources */,
 				AD360D431E691E7D003FFCA4 /* Frameworks */,
 				AD360D441E691E7D003FFCA4 /* Resources */,
+				975510EFC41BFDE0E4E6AE35 /* [CP] Embed Pods Frameworks */,
+				AF86E725B393642CE6B2967C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -130,6 +157,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		975510EFC41BFDE0E4E6AE35 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JDGCamera/Pods-JDGCamera-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AF86E725B393642CE6B2967C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JDGCamera/Pods-JDGCamera-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D83E0CE0831C6686E4108B5B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AD360D421E691E7D003FFCA4 /* Sources */ = {
@@ -258,9 +333,11 @@
 		};
 		AD360D591E691E7D003FFCA4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 355017C6416FEC5CBEDBB81E /* Pods-JDGCamera.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = JDGCamera/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jefrydagucci.JDGCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -270,9 +347,11 @@
 		};
 		AD360D5A1E691E7D003FFCA4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7719FAEA240BFB7A92E2FF7B /* Pods-JDGCamera.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = JDGCamera/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jefrydagucci.JDGCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
