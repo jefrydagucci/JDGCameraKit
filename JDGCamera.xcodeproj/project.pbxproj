@@ -13,6 +13,7 @@
 		AD360D4F1E691E7D003FFCA4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD360D4D1E691E7D003FFCA4 /* Main.storyboard */; };
 		AD360D511E691E7D003FFCA4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD360D501E691E7D003FFCA4 /* Assets.xcassets */; };
 		AD360D541E691E7D003FFCA4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD360D521E691E7D003FFCA4 /* LaunchScreen.storyboard */; };
+		AD360D5E1E69220D003FFCA4 /* JDGCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD360D5D1E69220D003FFCA4 /* JDGCamera.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		AD360D531E691E7D003FFCA4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AD360D551E691E7D003FFCA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD360D5B1E6920D0003FFCA4 /* JDGCameraHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JDGCameraHeader.h; sourceTree = "<group>"; };
+		AD360D5D1E69220D003FFCA4 /* JDGCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JDGCamera.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 		AD360D481E691E7D003FFCA4 /* JDGCamera */ = {
 			isa = PBXGroup;
 			children = (
+				AD360D5C1E692202003FFCA4 /* Sources */,
 				AD360D491E691E7D003FFCA4 /* AppDelegate.swift */,
 				AD360D4B1E691E7D003FFCA4 /* ViewController.swift */,
 				AD360D4D1E691E7D003FFCA4 /* Main.storyboard */,
@@ -88,6 +91,14 @@
 				AD360D5B1E6920D0003FFCA4 /* JDGCameraHeader.h */,
 			);
 			path = JDGCamera;
+			sourceTree = "<group>";
+		};
+		AD360D5C1E692202003FFCA4 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				AD360D5D1E69220D003FFCA4 /* JDGCamera.swift */,
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,6 +225,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD360D4C1E691E7D003FFCA4 /* ViewController.swift in Sources */,
+				AD360D5E1E69220D003FFCA4 /* JDGCamera.swift in Sources */,
 				AD360D4A1E691E7D003FFCA4 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
