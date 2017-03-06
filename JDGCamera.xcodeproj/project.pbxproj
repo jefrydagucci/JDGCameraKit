@@ -355,7 +355,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jefrydagucci.JDGCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = $SRCROOT/$PROJECT_NAME/JDGCameraHeader.h;
+				SWIFT_OBJC_BRIDGING_HEADER = $SRCROOT/Sources/JDGCameraHeader.h;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -370,7 +370,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jefrydagucci.JDGCamera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = $SRCROOT/$PROJECT_NAME/JDGCameraHeader.h;
+				SWIFT_OBJC_BRIDGING_HEADER = $SRCROOT/Sources/JDGCameraHeader.h;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
