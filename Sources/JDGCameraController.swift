@@ -30,7 +30,7 @@ open class JDGCameraController: UIViewController {
     private var flashButton:UIButton? = UIButton()
     private var cameraModeButton:UIButton? = UIButton()
     
-    open var recordButtonWidth:CGFloat   = 90
+    open var recordButtonWidth:CGFloat   = 50
     
     open var cameraDelegate:JDGCameraDelegate?
     
@@ -91,14 +91,15 @@ open class JDGCameraController: UIViewController {
     }
     
     @objc private func setupBottomToolbarView(){
-        let screenBound = UIScreen.main.bounds
+        let screenBound = self.view.bounds
         let height:CGFloat = recordButtonWidth * 1.6
         toolbarView.frame = CGRect( x: 0, y: screenBound.size.height - height, width: screenBound.size.width, height: height)
-        toolbarView.autoresizingMask    = [.flexibleWidth, .flexibleBottomMargin]
         
         if !self.view.subviews.contains(toolbarView){
             self.view.addSubview(toolbarView)
         }
+        toolbarView.translatesAutoresizingMaskIntoConstraints   = true
+        toolbarView.autoresizingMask    = [.flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin]
     }
     
     let topToolbarButtonWidth:CGFloat   = 35
@@ -111,6 +112,9 @@ open class JDGCameraController: UIViewController {
         if !self.view.subviews.contains(topToolbarView){
             self.view.addSubview(topToolbarView)
         }
+        topToolbarView.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
+        topToolbarView.translatesAutoresizingMaskIntoConstraints   = true
+        topToolbarView.autoresizingMask    = [.flexibleTopMargin, .flexibleRightMargin, .flexibleLeftMargin]
     }
     
     @objc private func setupButton(){
@@ -136,6 +140,18 @@ open class JDGCameraController: UIViewController {
         let centerY = toolbarFrame.size.height/2
         btn.center  = CGPoint( x: centerX, y: centerY)
         recordButton = btn
+    }
+    
+    open override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        guard
+            let btn = recordButton,
+            let btnContainer = recordButton?.superview else{ return }
+        let f = btnContainer.frame
+        let centerX = f.size.width/2
+        let centerY = f.size.height/2
+        btn.center  = CGPoint( x: centerX, y: centerY)
     }
     
     @objc private func setupFlashButton(){
