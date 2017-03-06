@@ -13,8 +13,8 @@ import IoniconsSwift
 import UIImage_Additions
 
 protocol JDGCameraDelegate {
-    func jdg_cameraDidCapture(_ image:UIImage?,_ info:[AnyHashable : Any]?,_ error:Error?)
-    func jdg_cameraDidRecord(_ url:URL?,_ error:Error?)
+    func jdg_cameraDidCapture(cameraController:JDGCameraController, _ image:UIImage?,_ info:[AnyHashable : Any]?,_ error:Error?)
+    func jdg_cameraDidRecord(cameraController:JDGCameraController, _ url:URL?,_ error:Error?)
 }
 
 class JDGCameraController: UIViewController {
@@ -254,7 +254,7 @@ class JDGCameraController: UIViewController {
         camera?.capture({ (camera:LLSimpleCamera?, image:UIImage?, info:[AnyHashable : Any]?, error:Error?) in
             
             guard let delegate = self.cameraDelegate else{ return }
-            delegate.jdg_cameraDidCapture(image, info, error)
+            delegate.jdg_cameraDidCapture(cameraController:self, image, info, error)
             
         }, exactSeenImage: true)
     }
@@ -314,7 +314,7 @@ class JDGCameraController: UIViewController {
                 
                 self.endRecording()
                 guard let delegate = self.cameraDelegate else{ return }
-                delegate.jdg_cameraDidRecord(url, error)
+                delegate.jdg_cameraDidRecord(cameraController:self, url, error)
                 
             })
         } catch let error {
