@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
 
   s.description  = <<-DESC
 
-JDGCamera is a simple camera created with LLSimpleCamera to capture image and record video with maximum recording duration
+JDGCamera is a simple camera created with LLSimpleCamera to capture image and record video with maximum recording duration like Instagram story camera
 
                    DESC
 
@@ -17,9 +17,9 @@ JDGCamera is a simple camera created with LLSimpleCamera to capture image and re
   s.author             = { "Jefry" => "jefrydagucci@gmail.com" }
 
   s.platform     = :ios, "8.0"
-  s.source       = { :git => "http://EXAMPLE/JDGCamera.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/jefrydagucci/JDGCamera.git", :tag => "v#{s.version}" }
 
-  s.source_files  = "Sources", "Sources/**/*.{swift}"
+  s.source_files  = "Sources", "Sources/*.{swift}"
 
   s.framework  = "AVFoundation"
 
