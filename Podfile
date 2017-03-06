@@ -4,11 +4,10 @@
 target 'JDGCamera' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
-pod 'TransitionTreasury'
-pod 'LLSimpleCamera'
-pod 'SDRecordButton'
+pod 'LLSimpleCamera', '~> 5.0'
+pod 'SDRecordButton', '~> 1.0'
 pod 'IoniconsSwift', '~> 2.1.4'
-pod 'UIImage+Additions'
+pod 'UIImage+Additions', '~> 2.1.3'
 
   # Pods for JDGCamera
 
