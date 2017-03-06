@@ -8,18 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		79DA409885AEECCD7D6530E9 /* Pods_JDGCamera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EE0022F4D253AC0428F7351 /* Pods_JDGCamera.framework */; };
+		AD2F34C81E6D1B5F0068E049 /* JDGCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2F34C71E6D1B5F0068E049 /* JDGCamera.swift */; };
 		AD360D4A1E691E7D003FFCA4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD360D491E691E7D003FFCA4 /* AppDelegate.swift */; };
 		AD360D4C1E691E7D003FFCA4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD360D4B1E691E7D003FFCA4 /* ViewController.swift */; };
 		AD360D4F1E691E7D003FFCA4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD360D4D1E691E7D003FFCA4 /* Main.storyboard */; };
 		AD360D511E691E7D003FFCA4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AD360D501E691E7D003FFCA4 /* Assets.xcassets */; };
 		AD360D541E691E7D003FFCA4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD360D521E691E7D003FFCA4 /* LaunchScreen.storyboard */; };
-		AD360D5E1E69220D003FFCA4 /* JDGCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD360D5D1E69220D003FFCA4 /* JDGCamera.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0EE0022F4D253AC0428F7351 /* Pods_JDGCamera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JDGCamera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		355017C6416FEC5CBEDBB81E /* Pods-JDGCamera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JDGCamera.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JDGCamera/Pods-JDGCamera.debug.xcconfig"; sourceTree = "<group>"; };
 		7719FAEA240BFB7A92E2FF7B /* Pods-JDGCamera.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JDGCamera.release.xcconfig"; path = "Pods/Target Support Files/Pods-JDGCamera/Pods-JDGCamera.release.xcconfig"; sourceTree = "<group>"; };
+		AD2F34C71E6D1B5F0068E049 /* JDGCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JDGCamera.swift; sourceTree = "<group>"; };
 		AD360D461E691E7D003FFCA4 /* JDGCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JDGCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD360D491E691E7D003FFCA4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD360D4B1E691E7D003FFCA4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -28,7 +29,6 @@
 		AD360D531E691E7D003FFCA4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AD360D551E691E7D003FFCA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD360D5B1E6920D0003FFCA4 /* JDGCameraHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JDGCameraHeader.h; sourceTree = "<group>"; };
-		AD360D5D1E69220D003FFCA4 /* JDGCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JDGCamera.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +60,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		AD2F34C61E6D1B5F0068E049 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				AD2F34C71E6D1B5F0068E049 /* JDGCamera.swift */,
+			);
+			path = Sources;
+			sourceTree = SOURCE_ROOT;
+		};
 		AD360D3D1E691E7D003FFCA4 = {
 			isa = PBXGroup;
 			children = (
@@ -81,7 +89,7 @@
 		AD360D481E691E7D003FFCA4 /* JDGCamera */ = {
 			isa = PBXGroup;
 			children = (
-				AD360D5C1E692202003FFCA4 /* Sources */,
+				AD2F34C61E6D1B5F0068E049 /* Sources */,
 				AD360D491E691E7D003FFCA4 /* AppDelegate.swift */,
 				AD360D4B1E691E7D003FFCA4 /* ViewController.swift */,
 				AD360D4D1E691E7D003FFCA4 /* Main.storyboard */,
@@ -91,14 +99,6 @@
 				AD360D5B1E6920D0003FFCA4 /* JDGCameraHeader.h */,
 			);
 			path = JDGCamera;
-			sourceTree = "<group>";
-		};
-		AD360D5C1E692202003FFCA4 /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				AD360D5D1E69220D003FFCA4 /* JDGCamera.swift */,
-			);
-			path = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,7 +225,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD360D4C1E691E7D003FFCA4 /* ViewController.swift in Sources */,
-				AD360D5E1E69220D003FFCA4 /* JDGCamera.swift in Sources */,
+				AD2F34C81E6D1B5F0068E049 /* JDGCamera.swift in Sources */,
 				AD360D4A1E691E7D003FFCA4 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
