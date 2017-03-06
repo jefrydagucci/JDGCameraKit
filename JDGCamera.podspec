@@ -20,6 +20,7 @@ JDGCamera is a simple camera created with LLSimpleCamera to capture image and re
   s.source       = { :git => "https://github.com/jefrydagucci/JDGCamera.git", :tag => "v#{s.version}" }
 
   s.source_files  = "Sources", "Sources/*.{swift}"
+  s.public_header_files  = "Sources", "Sources/*.{h}"
 
   s.framework  = "AVFoundation"
 
