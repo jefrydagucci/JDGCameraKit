@@ -30,7 +30,7 @@ class JDGCamera: UIViewController {
     private var flashButton:UIButton? = UIButton()
     private var cameraModeButton:UIButton? = UIButton()
     
-    var recordButtonWidth  = 90
+    var recordButtonWidth:CGFloat   = 90
     
     var cameraDelegate:JDGCameraDelegate?
     
@@ -92,7 +92,7 @@ class JDGCamera: UIViewController {
     
     @objc private func setupBottomToolbarView(){
         let screenBound = UIScreen.main.bounds
-        let height:CGFloat = 150
+        let height:CGFloat = recordButtonWidth * 1.6
         toolbarView.frame = CGRect( x: 0, y: screenBound.size.height - height, width: screenBound.size.width, height: height)
         toolbarView.autoresizingMask    = [.flexibleWidth, .flexibleBottomMargin]
         
