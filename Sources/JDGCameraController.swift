@@ -17,7 +17,7 @@ protocol JDGCameraDelegate {
     func jdg_cameraDidRecord(_ url:URL?,_ error:Error?)
 }
 
-class JDGCamera: UIViewController {
+class JDGCameraController: UIViewController {
     
     private let toolbarView = UIView()
     private let topToolbarView = UIView()
