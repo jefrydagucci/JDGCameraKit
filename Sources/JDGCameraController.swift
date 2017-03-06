@@ -15,6 +15,11 @@ import UIImage_Additions
 public protocol JDGCameraDelegate {
     func jdg_cameraDidCapture(cameraController:JDGCameraController, _ image:UIImage?,_ info:[AnyHashable : Any]?,_ error:Error?)
     func jdg_cameraDidRecord(cameraController:JDGCameraController, _ url:URL?,_ error:Error?)
+    func jdg_cameraDidSetup(cameraController:JDGCameraController, toolbarView:UIView)
+    func jdg_cameraDidSetup(cameraController:JDGCameraController, topToolbarView:UIView)
+    func jdg_cameraDidSetup(cameraController:JDGCameraController, recordButton:SDRecordButton)
+    func jdg_cameraDidSetup(cameraController:JDGCameraController, flashButton:UIButton)
+    func jdg_cameraDidSetup(cameraController:JDGCameraController, cameraModeButton:UIButton)
 }
 
 open class JDGCameraController: UIViewController {
@@ -100,6 +105,9 @@ open class JDGCameraController: UIViewController {
         }
         toolbarView.translatesAutoresizingMaskIntoConstraints   = true
         toolbarView.autoresizingMask    = [.flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin]
+        
+        guard let delegate = self.cameraDelegate else { return }
+        delegate.jdg_cameraDidSetup(cameraController: self, toolbarView:toolbarView)
     }
     
     let topToolbarButtonWidth:CGFloat   = 35
@@ -112,9 +120,10 @@ open class JDGCameraController: UIViewController {
         if !self.view.subviews.contains(topToolbarView){
             self.view.addSubview(topToolbarView)
         }
-        topToolbarView.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
         topToolbarView.translatesAutoresizingMaskIntoConstraints   = true
         topToolbarView.autoresizingMask    = [.flexibleTopMargin, .flexibleRightMargin, .flexibleLeftMargin]
+        guard let delegate = self.cameraDelegate else { return }
+        delegate.jdg_cameraDidSetup(cameraController: self, topToolbarView:toolbarView)
     }
     
     @objc private func setupButton(){
@@ -140,6 +149,9 @@ open class JDGCameraController: UIViewController {
         let centerY = toolbarFrame.size.height/2
         btn.center  = CGPoint( x: centerX, y: centerY)
         recordButton = btn
+        
+        guard let delegate = self.cameraDelegate else { return }
+        delegate.jdg_cameraDidSetup(cameraController: self, recordButton:btn)
     }
     
     open override func viewDidLayoutSubviews() {
@@ -170,6 +182,9 @@ open class JDGCameraController: UIViewController {
             
             flashButton.removeTarget(self, action: nil, for: .allEvents)
             flashButton.addTarget(self, action: #selector(toggleFlash), for: .touchUpInside)
+            
+            guard let delegate = self.cameraDelegate else { return }
+            delegate.jdg_cameraDidSetup(cameraController: self, flashButton: flashButton)
         }
     }
     
@@ -189,6 +204,9 @@ open class JDGCameraController: UIViewController {
             
             cameraModeButton.removeTarget(self, action: nil, for: .allEvents)
             cameraModeButton.addTarget(self, action: #selector(toggleCameraPosition), for: .touchUpInside)
+            
+            guard let delegate = self.cameraDelegate else { return }
+            delegate.jdg_cameraDidSetup(cameraController: self, cameraModeButton: cameraModeButton)
         }
     }
     
