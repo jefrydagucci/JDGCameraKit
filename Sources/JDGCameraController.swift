@@ -12,27 +12,27 @@ import SDRecordButton
 import IoniconsSwift
 import UIImage_Additions
 
-protocol JDGCameraDelegate {
+public protocol JDGCameraDelegate {
     func jdg_cameraDidCapture(cameraController:JDGCameraController, _ image:UIImage?,_ info:[AnyHashable : Any]?,_ error:Error?)
     func jdg_cameraDidRecord(cameraController:JDGCameraController, _ url:URL?,_ error:Error?)
 }
 
-class JDGCameraController: UIViewController {
+public class JDGCameraController: UIViewController {
     
     private let toolbarView = UIView()
     private let topToolbarView = UIView()
     
-    var defaultRecordButtonColor:UIColor = UIColor.white
-    var defaultProgressColor:UIColor = UIColor.red
-    var defaultRecordButtonImage:UIImage?
+    public var defaultRecordButtonColor:UIColor = UIColor.white
+    public var defaultProgressColor:UIColor = UIColor.red
+    public var defaultRecordButtonImage:UIImage?
     
     public private(set) var recordButton:SDRecordButton?
     private var flashButton:UIButton? = UIButton()
     private var cameraModeButton:UIButton? = UIButton()
     
-    var recordButtonWidth:CGFloat   = 90
+    public var recordButtonWidth:CGFloat   = 90
     
-    var cameraDelegate:JDGCameraDelegate?
+    public var cameraDelegate:JDGCameraDelegate?
     
     private var camera:LLSimpleCamera?
     
@@ -40,21 +40,21 @@ class JDGCameraController: UIViewController {
     private var timerLongPress:Timer?
     
     private let progressTimeRepeatingValue:CGFloat  = 0.05
-    var maximumRecordingDuration:CGFloat    = 60
-    var recordingDelay:CGFloat  = 1.0
+    public var maximumRecordingDuration:CGFloat    = 60
+    public var recordingDelay:CGFloat  = 1.0
     
     private var currentRecordingProgress:CGFloat  = 0
     
-//    MARK:View
-    override func viewDidLoad() {
+    //    MARK:View
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         self.setupCamera()
     }
     
-//    MARK:Setup
+    //    MARK:Setup
     
-    func setupCamera(){
+    public func setupCamera(){
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: DispatchTime.now().rawValue + (3 * 1000000)), execute: {
             LLSimpleCamera.requestPermission { (permitted) in
                 if(permitted){
@@ -159,7 +159,7 @@ class JDGCameraController: UIViewController {
     
     @objc private func setupCameraModeButton(){
         if(LLSimpleCamera.isRearCameraAvailable() && LLSimpleCamera.isFrontCameraAvailable()){
-        
+            
             let flashButtonFrame = flashButton?.frame ?? CGRect( x: topToolbarButtonWidth, y: 0, width: 0, height: 0)
             let frame = CGRect( x: flashButtonFrame.origin.x + flashButtonFrame.size.width + topToolbarButtonWidth, y: 0, width: topToolbarButtonWidth, height: topToolbarButtonWidth)
             guard let cameraModeButton = cameraModeButton else{ return }
@@ -187,7 +187,7 @@ class JDGCameraController: UIViewController {
         recordButton.addTarget(self, action: #selector(captureOrStopRecord), for: .touchUpOutside)
     }
     
-//    MARK:Timer
+    //    MARK:Timer
     @objc private func startRecordingTimer(){
         let isRepeat = true
         DispatchQueue.main.async {
@@ -214,16 +214,16 @@ class JDGCameraController: UIViewController {
         btn.setProgress(currentRecordingProgress/maximumRecordingDuration)
     }
     
-//    MARK:Action
+    //    MARK:Action
     
-    func toggleFlash(){
+    public func toggleFlash(){
         guard let flashButton = flashButton else{ return }
         flashButton.isSelected  = !flashButton.isSelected
         
         _ = camera?.updateFlashMode(flashButton.isSelected ? LLCameraFlashOn : LLCameraFlashOff)
     }
     
-    func toggleCameraPosition(){
+    public func toggleCameraPosition(){
         guard let camera = camera else{ return }
         camera.togglePosition()
     }
@@ -250,7 +250,7 @@ class JDGCameraController: UIViewController {
         self.startRecording()
     }
     
-    func capture(){
+    public func capture(){
         camera?.capture({ (camera:LLSimpleCamera?, image:UIImage?, info:[AnyHashable : Any]?, error:Error?) in
             
             guard let delegate = self.cameraDelegate else{ return }
@@ -266,7 +266,7 @@ class JDGCameraController: UIViewController {
         }
     }
     
-    func captureOrStopRecord(){
+    public func captureOrStopRecord(){
         guard let camera = camera else { return }
         if (camera.isRecording){
             self.stopRecording()
@@ -277,7 +277,7 @@ class JDGCameraController: UIViewController {
         }
     }
     
-    func stopRecording(){
+    public func stopRecording(){
         currentRecordingProgress = 0
         self.timerRecording?.invalidate()
         
@@ -294,7 +294,7 @@ class JDGCameraController: UIViewController {
         btn.setProgress(currentRecordingProgress)
     }
     
-    func record(){
+    public func record(){
         do {
             let docDir  = try FileManager.default.url(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask, appropriateFor: nil, create: true)
             var fileURL = docDir.appendingPathComponent("JDGCameraTemp")
