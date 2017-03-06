@@ -17,22 +17,22 @@ public protocol JDGCameraDelegate {
     func jdg_cameraDidRecord(cameraController:JDGCameraController, _ url:URL?,_ error:Error?)
 }
 
-public class JDGCameraController: UIViewController {
+open class JDGCameraController: UIViewController {
     
     private let toolbarView = UIView()
     private let topToolbarView = UIView()
     
-    public var defaultRecordButtonColor:UIColor = UIColor.white
-    public var defaultProgressColor:UIColor = UIColor.red
-    public var defaultRecordButtonImage:UIImage?
+    open var defaultRecordButtonColor:UIColor = UIColor.white
+    open var defaultProgressColor:UIColor = UIColor.red
+    open var defaultRecordButtonImage:UIImage?
     
-    public private(set) var recordButton:SDRecordButton?
+    open private(set) var recordButton:SDRecordButton?
     private var flashButton:UIButton? = UIButton()
     private var cameraModeButton:UIButton? = UIButton()
     
-    public var recordButtonWidth:CGFloat   = 90
+    open var recordButtonWidth:CGFloat   = 90
     
-    public var cameraDelegate:JDGCameraDelegate?
+    open var cameraDelegate:JDGCameraDelegate?
     
     private var camera:LLSimpleCamera?
     
@@ -40,13 +40,13 @@ public class JDGCameraController: UIViewController {
     private var timerLongPress:Timer?
     
     private let progressTimeRepeatingValue:CGFloat  = 0.05
-    public var maximumRecordingDuration:CGFloat    = 60
-    public var recordingDelay:CGFloat  = 1.0
+    open var maximumRecordingDuration:CGFloat    = 60
+    open var recordingDelay:CGFloat  = 1.0
     
     private var currentRecordingProgress:CGFloat  = 0
     
     //    MARK:View
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
         self.setupCamera()
@@ -54,7 +54,7 @@ public class JDGCameraController: UIViewController {
     
     //    MARK:Setup
     
-    public func setupCamera(){
+    open func setupCamera(){
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: DispatchTime.now().rawValue + (3 * 1000000)), execute: {
             LLSimpleCamera.requestPermission { (permitted) in
                 if(permitted){
@@ -216,14 +216,14 @@ public class JDGCameraController: UIViewController {
     
     //    MARK:Action
     
-    public func toggleFlash(){
+    open func toggleFlash(){
         guard let flashButton = flashButton else{ return }
         flashButton.isSelected  = !flashButton.isSelected
         
         _ = camera?.updateFlashMode(flashButton.isSelected ? LLCameraFlashOn : LLCameraFlashOff)
     }
     
-    public func toggleCameraPosition(){
+    open func toggleCameraPosition(){
         guard let camera = camera else{ return }
         camera.togglePosition()
     }
@@ -250,7 +250,7 @@ public class JDGCameraController: UIViewController {
         self.startRecording()
     }
     
-    public func capture(){
+    open func capture(){
         camera?.capture({ (camera:LLSimpleCamera?, image:UIImage?, info:[AnyHashable : Any]?, error:Error?) in
             
             guard let delegate = self.cameraDelegate else{ return }
@@ -266,7 +266,7 @@ public class JDGCameraController: UIViewController {
         }
     }
     
-    public func captureOrStopRecord(){
+    open func captureOrStopRecord(){
         guard let camera = camera else { return }
         if (camera.isRecording){
             self.stopRecording()
@@ -277,7 +277,7 @@ public class JDGCameraController: UIViewController {
         }
     }
     
-    public func stopRecording(){
+    open func stopRecording(){
         currentRecordingProgress = 0
         self.timerRecording?.invalidate()
         
@@ -294,7 +294,7 @@ public class JDGCameraController: UIViewController {
         btn.setProgress(currentRecordingProgress)
     }
     
-    public func record(){
+    open func record(){
         do {
             let docDir  = try FileManager.default.url(for: FileManager.SearchPathDirectory.documentDirectory, in: FileManager.SearchPathDomainMask.userDomainMask, appropriateFor: nil, create: true)
             var fileURL = docDir.appendingPathComponent("JDGCameraTemp")
