@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		79DA409885AEECCD7D6530E9 /* Pods_JDGCamera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EE0022F4D253AC0428F7351 /* Pods_JDGCamera.framework */; };
+		AD2E9CF51E6D516500DC4305 /* JDGCameraKit.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2E9CF31E6D516500DC4305 /* JDGCameraKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AD2E9CF81E6D516500DC4305 /* JDGCameraKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD2E9CF11E6D516500DC4305 /* JDGCameraKit.framework */; };
+		AD2E9CF91E6D516500DC4305 /* JDGCameraKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AD2E9CF11E6D516500DC4305 /* JDGCameraKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AD2F34C81E6D1B5F0068E049 /* JDGCameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2F34C71E6D1B5F0068E049 /* JDGCameraController.swift */; };
 		AD360D4A1E691E7D003FFCA4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD360D491E691E7D003FFCA4 /* AppDelegate.swift */; };
 		AD360D4C1E691E7D003FFCA4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD360D4B1E691E7D003FFCA4 /* ViewController.swift */; };
@@ -16,10 +19,37 @@
 		AD360D541E691E7D003FFCA4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD360D521E691E7D003FFCA4 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		AD2E9CF61E6D516500DC4305 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD360D3E1E691E7D003FFCA4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD2E9CF01E6D516400DC4305;
+			remoteInfo = JDGCameraKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AD2E9CFD1E6D516500DC4305 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AD2E9CF91E6D516500DC4305 /* JDGCameraKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		0EE0022F4D253AC0428F7351 /* Pods_JDGCamera.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JDGCamera.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		355017C6416FEC5CBEDBB81E /* Pods-JDGCamera.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JDGCamera.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JDGCamera/Pods-JDGCamera.debug.xcconfig"; sourceTree = "<group>"; };
 		7719FAEA240BFB7A92E2FF7B /* Pods-JDGCamera.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JDGCamera.release.xcconfig"; path = "Pods/Target Support Files/Pods-JDGCamera/Pods-JDGCamera.release.xcconfig"; sourceTree = "<group>"; };
+		AD2E9CF11E6D516500DC4305 /* JDGCameraKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JDGCameraKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD2E9CF31E6D516500DC4305 /* JDGCameraKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JDGCameraKit.h; sourceTree = "<group>"; };
+		AD2E9CF41E6D516500DC4305 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD2F34C71E6D1B5F0068E049 /* JDGCameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JDGCameraController.swift; sourceTree = "<group>"; };
 		AD2F34C91E6D23FC0068E049 /* JDGCameraHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JDGCameraHeader.h; sourceTree = "<group>"; };
 		AD360D461E691E7D003FFCA4 /* JDGCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JDGCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -32,10 +62,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AD2E9CED1E6D516400DC4305 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AD360D431E691E7D003FFCA4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD2E9CF81E6D516500DC4305 /* JDGCameraKit.framework in Frameworks */,
 				79DA409885AEECCD7D6530E9 /* Pods_JDGCamera.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -60,6 +98,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		AD2E9CF21E6D516500DC4305 /* JDGCameraKit */ = {
+			isa = PBXGroup;
+			children = (
+				AD2E9CF31E6D516500DC4305 /* JDGCameraKit.h */,
+				AD2E9CF41E6D516500DC4305 /* Info.plist */,
+			);
+			path = JDGCameraKit;
+			sourceTree = "<group>";
+		};
 		AD2F34C61E6D1B5F0068E049 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -73,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				AD360D481E691E7D003FFCA4 /* JDGCamera */,
+				AD2E9CF21E6D516500DC4305 /* JDGCameraKit */,
 				AD360D471E691E7D003FFCA4 /* Products */,
 				6DADD7E899A9197199201FFC /* Pods */,
 				077AF8048DB8C5B8C8B16575 /* Frameworks */,
@@ -83,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				AD360D461E691E7D003FFCA4 /* JDGCamera.app */,
+				AD2E9CF11E6D516500DC4305 /* JDGCameraKit.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -103,7 +152,36 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		AD2E9CEE1E6D516400DC4305 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD2E9CF51E6D516500DC4305 /* JDGCameraKit.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
+		AD2E9CF01E6D516400DC4305 /* JDGCameraKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD2E9CFC1E6D516500DC4305 /* Build configuration list for PBXNativeTarget "JDGCameraKit" */;
+			buildPhases = (
+				AD2E9CEC1E6D516400DC4305 /* Sources */,
+				AD2E9CED1E6D516400DC4305 /* Frameworks */,
+				AD2E9CEE1E6D516400DC4305 /* Headers */,
+				AD2E9CEF1E6D516400DC4305 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JDGCameraKit;
+			productName = JDGCameraKit;
+			productReference = AD2E9CF11E6D516500DC4305 /* JDGCameraKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		AD360D451E691E7D003FFCA4 /* JDGCamera */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AD360D581E691E7D003FFCA4 /* Build configuration list for PBXNativeTarget "JDGCamera" */;
@@ -114,10 +192,12 @@
 				AD360D441E691E7D003FFCA4 /* Resources */,
 				975510EFC41BFDE0E4E6AE35 /* [CP] Embed Pods Frameworks */,
 				AF86E725B393642CE6B2967C /* [CP] Copy Pods Resources */,
+				AD2E9CFD1E6D516500DC4305 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				AD2E9CF71E6D516500DC4305 /* PBXTargetDependency */,
 			);
 			name = JDGCamera;
 			productName = JDGCamera;
@@ -134,6 +214,10 @@
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = jefrydagucci;
 				TargetAttributes = {
+					AD2E9CF01E6D516400DC4305 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
 					AD360D451E691E7D003FFCA4 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
@@ -154,11 +238,19 @@
 			projectRoot = "";
 			targets = (
 				AD360D451E691E7D003FFCA4 /* JDGCamera */,
+				AD2E9CF01E6D516400DC4305 /* JDGCameraKit */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		AD2E9CEF1E6D516400DC4305 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AD360D441E691E7D003FFCA4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -220,6 +312,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AD2E9CEC1E6D516400DC4305 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AD360D421E691E7D003FFCA4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -231,6 +330,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AD2E9CF71E6D516500DC4305 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD2E9CF01E6D516400DC4305 /* JDGCameraKit */;
+			targetProxy = AD2E9CF61E6D516500DC4305 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		AD360D4D1E691E7D003FFCA4 /* Main.storyboard */ = {
@@ -252,6 +359,50 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		AD2E9CFA1E6D516500DC4305 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = JDGCameraKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jefrydagucci.JDGCameraKit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		AD2E9CFB1E6D516500DC4305 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = JDGCameraKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jefrydagucci.JDGCameraKit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		AD360D561E691E7D003FFCA4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -378,6 +529,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AD2E9CFC1E6D516500DC4305 /* Build configuration list for PBXNativeTarget "JDGCameraKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD2E9CFA1E6D516500DC4305 /* Debug */,
+				AD2E9CFB1E6D516500DC4305 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		AD360D411E691E7D003FFCA4 /* Build configuration list for PBXProject "JDGCamera" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
