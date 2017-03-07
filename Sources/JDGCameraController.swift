@@ -24,8 +24,8 @@ public protocol JDGCameraDelegate {
 
 open class JDGCameraController: UIViewController {
     
-    private let toolbarView = UIView()
-    private let topToolbarView = UIView()
+    open let toolbarView = UIView()
+    open let topToolbarView = UIView()
     
     open var defaultRecordButtonColor:UIColor = UIColor.white
     open var defaultProgressColor:UIColor = UIColor.red
