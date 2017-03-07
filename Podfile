@@ -8,6 +8,7 @@ pod 'LLSimpleCamera', '~> 5.0'
 pod 'SDRecordButton', '~> 1.0'
 pod 'IoniconsSwift', '~> 2.1.4'
 pod 'UIImage+Additions', '~> 2.1.3'
+pod 'KGNAutoLayout', '~> 1.5.2'
 
   # Pods for JDGCamera
 
