@@ -179,7 +179,7 @@ open class JDGCameraController: UIViewController {
             flashButton.translatesAutoresizingMaskIntoConstraints   = false
             flashButton.size(toHeight: topToolbarButtonWidth)
             flashButton.sizeWidthToHeight(withAspectRatio: 1)
-            flashButton.pinToLeftEdgeOfSuperview(withOffset: topToolbarButtonWidth, priority: UILayoutPriorityRequired)
+            flashButton.pinToRightEdgeOfSuperview(withOffset: topToolbarButtonWidth * 3, priority: UILayoutPriorityRequired)
             flashButton.pinToTopEdgeOfSuperview(withOffset: topToolbarButtonWidth, priority: UILayoutPriorityRequired)
             
             flashButton.setImage(Ionicons.flashOff.image(topToolbarButtonWidth).add_tintedImage(with: .white, style: ADDImageTintStyleKeepingAlpha), for: .normal)
