@@ -100,7 +100,6 @@ open class JDGCameraController: UIViewController {
     }
     
     @objc private func setupBottomToolbarView(){
-        let screenBound = self.view.bounds
         let height:CGFloat = recordButtonWidth * 1.6
         
         if !self.view.subviews.contains(toolbarView){
@@ -121,7 +120,6 @@ open class JDGCameraController: UIViewController {
     
     let topToolbarButtonWidth:CGFloat   = 35
     @objc private func setupTopToolbarView(){
-        let screenBound = UIScreen.main.bounds
         let height:CGFloat = topToolbarButtonWidth * 3.5
         if !self.view.subviews.contains(topToolbarView){
             self.view.addSubview(topToolbarView)
@@ -178,7 +176,6 @@ open class JDGCameraController: UIViewController {
             guard let flashButton = flashButton else{ return }
             if !topToolbarView.subviews.contains(flashButton){ topToolbarView.addSubview(flashButton) }
             
-            let toolbarFrame = topToolbarView.frame
             flashButton.translatesAutoresizingMaskIntoConstraints   = false
             flashButton.size(toHeight: topToolbarButtonWidth)
             flashButton.sizeWidthToHeight(withAspectRatio: 1)
@@ -207,8 +204,6 @@ open class JDGCameraController: UIViewController {
             let frame = CGRect( x: flashButtonFrame.origin.x + flashButtonFrame.size.width + topToolbarButtonWidth, y: 0, width: topToolbarButtonWidth, height: topToolbarButtonWidth)
             guard let cameraModeButton = cameraModeButton else{ return }
             if !topToolbarView.subviews.contains(cameraModeButton){ topToolbarView.addSubview(cameraModeButton) }
-            
-            let toolbarFrame = topToolbarView.frame
             
             cameraModeButton.translatesAutoresizingMaskIntoConstraints   = false
             cameraModeButton.size(toHeight: topToolbarButtonWidth)
