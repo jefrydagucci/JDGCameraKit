@@ -13,14 +13,14 @@ import IoniconsSwift
 import UIImage_Additions
 import KGNAutoLayout
 
-public protocol JDGCameraDelegate {
-    func jdg_cameraDidCapture(cameraController:JDGCameraController, _ image:UIImage?,_ info:[AnyHashable : Any]?,_ error:Error?)
-    func jdg_cameraDidRecord(cameraController:JDGCameraController, _ url:URL?,_ error:Error?)
-    func jdg_cameraDidSetup(cameraController:JDGCameraController, toolbarView:UIView)
-    func jdg_cameraDidSetup(cameraController:JDGCameraController, topToolbarView:UIView)
-    func jdg_cameraDidSetup(cameraController:JDGCameraController, recordButton:SDRecordButton)
-    func jdg_cameraDidSetup(cameraController:JDGCameraController, flashButton:UIButton)
-    func jdg_cameraDidSetup(cameraController:JDGCameraController, cameraModeButton:UIButton)
+@objc public protocol JDGCameraDelegate {
+    @objc optional func jdg_cameraDidCapture(cameraController:JDGCameraController, _ image:UIImage?,_ info:[AnyHashable : Any]?,_ error:Error?)
+    @objc optional func jdg_cameraDidRecord(cameraController:JDGCameraController, _ url:URL?,_ error:Error?)
+    @objc optional func jdg_cameraDidSetup(cameraController:JDGCameraController, toolbarView:UIView)
+    @objc optional func jdg_cameraDidSetup(cameraController:JDGCameraController, topToolbarView:UIView)
+    @objc optional func jdg_cameraDidSetup(cameraController:JDGCameraController, recordButton:SDRecordButton)
+    @objc optional func jdg_cameraDidSetup(cameraController:JDGCameraController, flashButton:UIButton)
+    @objc optional func jdg_cameraDidSetup(cameraController:JDGCameraController, cameraModeButton:UIButton)
 }
 
 open class JDGCameraController: UIViewController {
@@ -116,7 +116,7 @@ open class JDGCameraController: UIViewController {
     
     open func jdg_cameraDidSetup(cameraController:JDGCameraController, toolbarView:UIView){
         guard let delegate = self.cameraDelegate else { return }
-        delegate.jdg_cameraDidSetup(cameraController: self, toolbarView:toolbarView)
+        delegate.jdg_cameraDidSetup?(cameraController: self, toolbarView:toolbarView)
     }
     
     let topToolbarButtonWidth:CGFloat   = 35
@@ -136,7 +136,7 @@ open class JDGCameraController: UIViewController {
     
     open func jdg_cameraDidSetup(cameraController: JDGCameraController, topToolbarView:UIView){
         guard let delegate = self.cameraDelegate else { return }
-        delegate.jdg_cameraDidSetup(cameraController: self, topToolbarView:toolbarView)
+        delegate.jdg_cameraDidSetup?(cameraController: self, topToolbarView:toolbarView)
     }
     
     @objc private func setupButton(){
@@ -169,7 +169,7 @@ open class JDGCameraController: UIViewController {
     
     open func jdg_cameraDidSetup(cameraController: JDGCameraController, recordButton: SDRecordButton){
         guard let delegate = self.cameraDelegate else { return }
-        delegate.jdg_cameraDidSetup(cameraController: self, recordButton:recordButton)
+        delegate.jdg_cameraDidSetup?(cameraController: self, recordButton:recordButton)
     }
     
     @objc private func setupFlashButton(){
@@ -197,7 +197,7 @@ open class JDGCameraController: UIViewController {
     
     open func jdg_cameraDidSetup(cameraController: JDGCameraController, flashButton: UIButton){
         guard let delegate = self.cameraDelegate else { return }
-        delegate.jdg_cameraDidSetup(cameraController: self, flashButton: flashButton)
+        delegate.jdg_cameraDidSetup?(cameraController: self, flashButton: flashButton)
     }
     
     @objc private func setupCameraModeButton(){
@@ -227,7 +227,7 @@ open class JDGCameraController: UIViewController {
     
     open func jdg_cameraDidSetup(cameraController: JDGCameraController, cameraModeButton: UIButton){
         guard let delegate = self.cameraDelegate else { return }
-        delegate.jdg_cameraDidSetup(cameraController: self, cameraModeButton: cameraModeButton)
+        delegate.jdg_cameraDidSetup?(cameraController: self, cameraModeButton: cameraModeButton)
     }
     
     @objc private func setupButtonAction(){
@@ -309,7 +309,7 @@ open class JDGCameraController: UIViewController {
         camera?.capture({ (camera:LLSimpleCamera?, image:UIImage?, info:[AnyHashable : Any]?, error:Error?) in
             
             guard let delegate = self.cameraDelegate else{ return }
-            delegate.jdg_cameraDidCapture(cameraController:self, image, info, error)
+            delegate.jdg_cameraDidCapture?(cameraController:self, image, info, error)
             
         }, exactSeenImage: true)
     }
@@ -369,7 +369,7 @@ open class JDGCameraController: UIViewController {
                 
                 self.endRecording()
                 guard let delegate = self.cameraDelegate else{ return }
-                delegate.jdg_cameraDidRecord(cameraController:self, url, error)
+                delegate.jdg_cameraDidRecord?(cameraController:self, url, error)
                 
             })
         } catch let error {
