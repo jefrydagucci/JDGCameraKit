@@ -32,11 +32,11 @@ open class JDGCameraController: UIViewController {
     open var defaultProgressColor:UIColor = UIColor.red
     open var defaultRecordButtonImage:UIImage?
     
-    open private(set) var recordButton:SDRecordButton = SDRecordButton()
+    open private(set) var recordButton:SDRecordButton? = nil
     private var flashButton:UIButton? = UIButton()
     private var cameraModeButton:UIButton? = UIButton()
     
-    open var recordButtonWidth:CGFloat   = 50
+    private let recordButtonWidth:CGFloat   = 50
     
     open var cameraDelegate:JDGCameraDelegate?
     
@@ -58,19 +58,7 @@ open class JDGCameraController: UIViewController {
         self.setupCamera()
     }
     
-    open override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        guard
-            let btnContainer = recordButton.superview else{ return }
-        let f = btnContainer.frame
-        let centerX = f.size.width/2
-        let centerY = f.size.height/2
-        recordButton.center  = CGPoint( x: centerX, y: centerY)
-    }
-    
     //    MARK:Setup
-    
     open func setupCamera(){
         DispatchQueue.global().asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: DispatchTime.now().rawValue + (3 * 1000000)), execute: {
             LLSimpleCamera.requestPermission { (permitted) in
@@ -114,18 +102,15 @@ open class JDGCameraController: UIViewController {
     @objc private func setupBottomToolbarView(){
         let screenBound = self.view.bounds
         let height:CGFloat = recordButtonWidth * 1.6
-//        toolbarView.frame = CGRect( x: 0, y: screenBound.size.height - height, width: screenBound.size.width, height: height)
         
         if !self.view.subviews.contains(toolbarView){
             self.view.addSubview(toolbarView)
         }
-        let subview = toolbarView
-        subview.translatesAutoresizingMaskIntoConstraints   = false
-        subview.pinToSideEdgesOfSuperview()
-        subview.pinToBottomEdgeOfSuperview()
-        subview.size(toHeight: height)
+        toolbarView.translatesAutoresizingMaskIntoConstraints   = false
+        toolbarView.pinToSideEdgesOfSuperview()
+        toolbarView.pinToBottomEdgeOfSuperview()
+        toolbarView.size(toHeight: height)
         
-        toolbarView.backgroundColor = .red
         jdg_cameraDidSetup(cameraController:self, toolbarView: toolbarView)
     }
     
@@ -138,14 +123,13 @@ open class JDGCameraController: UIViewController {
     @objc private func setupTopToolbarView(){
         let screenBound = UIScreen.main.bounds
         let height:CGFloat = topToolbarButtonWidth * 3.5
-        topToolbarView.frame = CGRect( x: 0, y: 0, width: screenBound.size.width, height: height)
-        topToolbarView.autoresizingMask    = [.flexibleWidth, .flexibleTopMargin]
-        
         if !self.view.subviews.contains(topToolbarView){
             self.view.addSubview(topToolbarView)
         }
-        topToolbarView.translatesAutoresizingMaskIntoConstraints   = true
-        topToolbarView.autoresizingMask    = [.flexibleTopMargin, .flexibleRightMargin, .flexibleLeftMargin]
+        topToolbarView.translatesAutoresizingMaskIntoConstraints   = false
+        topToolbarView.pinToSideEdgesOfSuperview()
+        topToolbarView.pinToTopEdgeOfSuperview()
+        topToolbarView.size(toHeight: height)
         
         jdg_cameraDidSetup(cameraController: self, topToolbarView:toolbarView)
     }
@@ -161,25 +145,26 @@ open class JDGCameraController: UIViewController {
     }
     
     @objc private func setupRecordingButton(){
-        let frame = CGRect( x: 0, y: 0, width: recordButtonWidth, height: recordButtonWidth)
-        let btn = recordButton
-        btn.frame = frame
-        btn.buttonColor = defaultRecordButtonColor
+        let btn = SDRecordButton( frame: CGRect( x: 0, y: 0, width: recordButtonWidth, height: recordButtonWidth))
+        recordButton    = btn
+        
+        guard let recordButton = recordButton else{ return }
+        recordButton.buttonColor = defaultRecordButtonColor
         if let btnImg = defaultRecordButtonImage{
-            btn.buttonColor = UIColor.clear
-            btn.setImage(btnImg, for: .normal)
+            recordButton.buttonColor = UIColor.clear
+            recordButton.setImage(btnImg, for: .normal)
         }
-        btn.progressColor   = defaultProgressColor
-        if !toolbarView.subviews.contains(btn){
-            toolbarView.addSubview(btn)
+        recordButton.progressColor   = defaultProgressColor
+        if !toolbarView.subviews.contains(recordButton){
+            toolbarView.addSubview(recordButton)
         }
+    
+        recordButton.translatesAutoresizingMaskIntoConstraints = false
+        recordButton.centerInSuperview()
+        recordButton.size(toHeight: recordButtonWidth)
+        recordButton.size(toWidth: recordButtonWidth)
         
-        let toolbarFrame = toolbarView.frame
-        let centerX = toolbarFrame.size.width/2
-        let centerY = toolbarFrame.size.height/2
-        btn.center  = CGPoint( x: centerX, y: centerY)
-        
-        jdg_cameraDidSetup(cameraController: self, recordButton:btn)
+        jdg_cameraDidSetup(cameraController: self, recordButton:recordButton)
     }
     
     open func jdg_cameraDidSetup(cameraController: JDGCameraController, recordButton: SDRecordButton){
@@ -189,23 +174,25 @@ open class JDGCameraController: UIViewController {
     
     @objc private func setupFlashButton(){
         guard let camera = camera else{ return }
-        if(camera.isFlashAvailable()){
-            let frame = CGRect( x: 0, y: 0, width: topToolbarButtonWidth, height: topToolbarButtonWidth)
+//        if(camera.isFlashAvailable()){
             guard let flashButton = flashButton else{ return }
-            flashButton.frame = frame
             if !topToolbarView.subviews.contains(flashButton){ topToolbarView.addSubview(flashButton) }
             
             let toolbarFrame = topToolbarView.frame
-            flashButton.center  = CGPoint( x: topToolbarButtonWidth * 2, y: toolbarFrame.size.height * 0.5)
+            flashButton.translatesAutoresizingMaskIntoConstraints   = false
+            flashButton.size(toHeight: topToolbarButtonWidth)
+            flashButton.sizeWidthToHeight(withAspectRatio: 1)
+            flashButton.pinToLeftEdgeOfSuperview(withOffset: topToolbarButtonWidth, priority: UILayoutPriorityRequired)
+            flashButton.pinToTopEdgeOfSuperview(withOffset: topToolbarButtonWidth, priority: UILayoutPriorityRequired)
             
-            flashButton.setImage(Ionicons.flashOff.image(frame.size.width).add_tintedImage(with: .white, style: ADDImageTintStyleKeepingAlpha), for: .normal)
-            flashButton.setImage(Ionicons.flash.image(frame.size.width).add_tintedImage(with: .white, style: ADDImageTintStyleKeepingAlpha), for: .selected)
+            flashButton.setImage(Ionicons.flashOff.image(topToolbarButtonWidth).add_tintedImage(with: .white, style: ADDImageTintStyleKeepingAlpha), for: .normal)
+            flashButton.setImage(Ionicons.flash.image(topToolbarButtonWidth).add_tintedImage(with: .white, style: ADDImageTintStyleKeepingAlpha), for: .selected)
             
             flashButton.removeTarget(self, action: nil, for: .allEvents)
             flashButton.addTarget(self, action: #selector(toggleFlash), for: .touchUpInside)
             
             jdg_cameraDidSetup(cameraController: self, flashButton: flashButton)
-        }
+//        }
     }
     
     open func jdg_cameraDidSetup(cameraController: JDGCameraController, flashButton: UIButton){
@@ -219,11 +206,15 @@ open class JDGCameraController: UIViewController {
             let flashButtonFrame = flashButton?.frame ?? CGRect( x: topToolbarButtonWidth, y: 0, width: 0, height: 0)
             let frame = CGRect( x: flashButtonFrame.origin.x + flashButtonFrame.size.width + topToolbarButtonWidth, y: 0, width: topToolbarButtonWidth, height: topToolbarButtonWidth)
             guard let cameraModeButton = cameraModeButton else{ return }
-            cameraModeButton.frame = frame
             if !topToolbarView.subviews.contains(cameraModeButton){ topToolbarView.addSubview(cameraModeButton) }
             
             let toolbarFrame = topToolbarView.frame
-            cameraModeButton.center  = CGPoint( x: UIScreen.main.bounds.size.width - (topToolbarButtonWidth * 2), y: toolbarFrame.size.height * 0.5)
+            
+            cameraModeButton.translatesAutoresizingMaskIntoConstraints   = false
+            cameraModeButton.size(toHeight: topToolbarButtonWidth)
+            cameraModeButton.sizeWidthToHeight(withAspectRatio: 1)
+            cameraModeButton.pinToRightEdgeOfSuperview(withOffset: topToolbarButtonWidth, priority: UILayoutPriorityRequired)
+            cameraModeButton.pinToTopEdgeOfSuperview(withOffset: topToolbarButtonWidth, priority: UILayoutPriorityRequired)
             
             cameraModeButton.setImage(Ionicons.iosReverseCamera.image(frame.size.width).add_tintedImage(with: .white, style: ADDImageTintStyleKeepingAlpha), for: .normal)
             
@@ -244,6 +235,8 @@ open class JDGCameraController: UIViewController {
     }
     
     @objc private func setupRecordButtonAction(){
+        guard let recordButton = recordButton else{ return }
+        
         recordButton.addTarget(self, action: #selector(recordButtonTapDown), for: .touchDown)
         recordButton.addTarget(self, action: #selector(captureOrStopRecord), for: .touchUpInside)
         recordButton.addTarget(self, action: #selector(captureOrStopRecord), for: .touchUpOutside)
@@ -264,8 +257,11 @@ open class JDGCameraController: UIViewController {
     }
     
     @objc private func updateRecordingProgress(){
+        guard let recordButton = recordButton else{ return }
+        
         if(currentRecordingProgress >= maximumRecordingDuration){
             self.captureOrStopRecord()
+            
             recordButton.endTracking(nil, with: nil)
             recordButton.sendActions(for: .touchUpOutside)
         }
@@ -349,6 +345,7 @@ open class JDGCameraController: UIViewController {
         camera.stopRecording()
         self.timerRecording?.invalidate()
         currentRecordingProgress = 0
+        guard let recordButton = recordButton else{ return }
         recordButton.setProgress(currentRecordingProgress)
     }
     
