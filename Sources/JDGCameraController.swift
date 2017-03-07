@@ -31,7 +31,7 @@ open class JDGCameraController: UIViewController {
     open var defaultProgressColor:UIColor = UIColor.red
     open var defaultRecordButtonImage:UIImage?
     
-    open private(set) var recordButton:SDRecordButton?
+    open private(set) var recordButton:SDRecordButton = SDRecordButton()
     private var flashButton:UIButton? = UIButton()
     private var cameraModeButton:UIButton? = UIButton()
     
@@ -133,7 +133,8 @@ open class JDGCameraController: UIViewController {
     
     @objc private func setupRecordingButton(){
         let frame = CGRect( x: 0, y: 0, width: recordButtonWidth, height: recordButtonWidth)
-        let btn = SDRecordButton(frame: frame)
+        let btn = recordButton
+        btn.frame = frame
         btn.buttonColor = defaultRecordButtonColor
         if let btnImg = defaultRecordButtonImage{
             btn.buttonColor = UIColor.clear
@@ -148,7 +149,6 @@ open class JDGCameraController: UIViewController {
         let centerX = toolbarFrame.size.width/2
         let centerY = toolbarFrame.size.height/2
         btn.center  = CGPoint( x: centerX, y: centerY)
-        recordButton = btn
         
         guard let delegate = self.cameraDelegate else { return }
         delegate.jdg_cameraDidSetup(cameraController: self, recordButton:btn)
@@ -158,12 +158,11 @@ open class JDGCameraController: UIViewController {
         super.viewDidLayoutSubviews()
         
         guard
-            let btn = recordButton,
-            let btnContainer = recordButton?.superview else{ return }
+            let btnContainer = recordButton.superview else{ return }
         let f = btnContainer.frame
         let centerX = f.size.width/2
         let centerY = f.size.height/2
-        btn.center  = CGPoint( x: centerX, y: centerY)
+        recordButton.center  = CGPoint( x: centerX, y: centerY)
     }
     
     @objc private func setupFlashButton(){
@@ -215,7 +214,6 @@ open class JDGCameraController: UIViewController {
     }
     
     @objc private func setupRecordButtonAction(){
-        guard let recordButton     = recordButton else{ return }
         recordButton.addTarget(self, action: #selector(recordButtonTapDown), for: .touchDown)
         recordButton.addTarget(self, action: #selector(captureOrStopRecord), for: .touchUpInside)
         recordButton.addTarget(self, action: #selector(captureOrStopRecord), for: .touchUpOutside)
@@ -236,16 +234,13 @@ open class JDGCameraController: UIViewController {
     }
     
     @objc private func updateRecordingProgress(){
-        guard let btn = recordButton else{ return }
-        
         if(currentRecordingProgress >= maximumRecordingDuration){
             self.captureOrStopRecord()
-            guard let recordButton  = recordButton else{ return }
             recordButton.endTracking(nil, with: nil)
             recordButton.sendActions(for: .touchUpOutside)
         }
         currentRecordingProgress += progressTimeRepeatingValue
-        btn.setProgress(currentRecordingProgress/maximumRecordingDuration)
+        recordButton.setProgress(currentRecordingProgress/maximumRecordingDuration)
     }
     
     //    MARK:Action
@@ -324,8 +319,7 @@ open class JDGCameraController: UIViewController {
         camera.stopRecording()
         self.timerRecording?.invalidate()
         currentRecordingProgress = 0
-        guard let btn = recordButton else{ return }
-        btn.setProgress(currentRecordingProgress)
+        recordButton.setProgress(currentRecordingProgress)
     }
     
     open func record(){
