@@ -30,5 +30,6 @@ JDGCamera is a simple camera created with LLSimpleCamera to capture image and re
   s.dependency "IoniconsSwift", "~> 2.1.4"
   s.dependency "UIImage+Additions", "~> 2.1.3"
   s.dependency "SDRecordButton", "~> 1.0"
+  s.dependency "KGNAutoLayout", "~> 1.5.2"
 
 end

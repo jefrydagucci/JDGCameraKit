@@ -174,7 +174,7 @@ open class JDGCameraController: UIViewController {
     
     @objc private func setupFlashButton(){
         guard let camera = camera else{ return }
-//        if(camera.isFlashAvailable()){
+        if(camera.isFlashAvailable()){
             guard let flashButton = flashButton else{ return }
             if !topToolbarView.subviews.contains(flashButton){ topToolbarView.addSubview(flashButton) }
             
@@ -192,7 +192,7 @@ open class JDGCameraController: UIViewController {
             flashButton.addTarget(self, action: #selector(toggleFlash), for: .touchUpInside)
             
             jdg_cameraDidSetup(cameraController: self, flashButton: flashButton)
-//        }
+        }
     }
     
     open func jdg_cameraDidSetup(cameraController: JDGCameraController, flashButton: UIButton){
