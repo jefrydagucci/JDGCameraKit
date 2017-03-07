@@ -11,6 +11,7 @@ import LLSimpleCamera
 import SDRecordButton
 import IoniconsSwift
 import UIImage_Additions
+import KGNAutoLayout
 
 public protocol JDGCameraDelegate {
     func jdg_cameraDidCapture(cameraController:JDGCameraController, _ image:UIImage?,_ info:[AnyHashable : Any]?,_ error:Error?)
@@ -57,6 +58,17 @@ open class JDGCameraController: UIViewController {
         self.setupCamera()
     }
     
+    open override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        guard
+            let btnContainer = recordButton.superview else{ return }
+        let f = btnContainer.frame
+        let centerX = f.size.width/2
+        let centerY = f.size.height/2
+        recordButton.center  = CGPoint( x: centerX, y: centerY)
+    }
+    
     //    MARK:Setup
     
     open func setupCamera(){
@@ -69,6 +81,10 @@ open class JDGCameraController: UIViewController {
                         DispatchQueue.main.async {
                             camera.attach(to: self, withFrame: CGRect( x: 0, y: 0, width: bound.size.width, height: bound.size.height))
                             camera.start()
+                            
+                            let subview = camera.view
+                            subview?.translatesAutoresizingMaskIntoConstraints   = false
+                            subview?.pinToEdgesOfSuperview()
                             
                             self.camera = camera
                             
@@ -98,14 +114,18 @@ open class JDGCameraController: UIViewController {
     @objc private func setupBottomToolbarView(){
         let screenBound = self.view.bounds
         let height:CGFloat = recordButtonWidth * 1.6
-        toolbarView.frame = CGRect( x: 0, y: screenBound.size.height - height, width: screenBound.size.width, height: height)
+//        toolbarView.frame = CGRect( x: 0, y: screenBound.size.height - height, width: screenBound.size.width, height: height)
         
         if !self.view.subviews.contains(toolbarView){
             self.view.addSubview(toolbarView)
         }
-        toolbarView.translatesAutoresizingMaskIntoConstraints   = true
-        toolbarView.autoresizingMask    = [.flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin]
+        let subview = toolbarView
+        subview.translatesAutoresizingMaskIntoConstraints   = false
+        subview.pinToSideEdgesOfSuperview()
+        subview.pinToBottomEdgeOfSuperview()
+        subview.size(toHeight: height)
         
+        toolbarView.backgroundColor = .red
         jdg_cameraDidSetup(cameraController:self, toolbarView: toolbarView)
     }
     
@@ -165,17 +185,6 @@ open class JDGCameraController: UIViewController {
     open func jdg_cameraDidSetup(cameraController: JDGCameraController, recordButton: SDRecordButton){
         guard let delegate = self.cameraDelegate else { return }
         delegate.jdg_cameraDidSetup(cameraController: self, recordButton:recordButton)
-    }
-    
-    open override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        guard
-            let btnContainer = recordButton.superview else{ return }
-        let f = btnContainer.frame
-        let centerX = f.size.width/2
-        let centerY = f.size.height/2
-        recordButton.center  = CGPoint( x: centerX, y: centerY)
     }
     
     @objc private func setupFlashButton(){
