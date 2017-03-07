@@ -106,6 +106,10 @@ open class JDGCameraController: UIViewController {
         toolbarView.translatesAutoresizingMaskIntoConstraints   = true
         toolbarView.autoresizingMask    = [.flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin]
         
+        jdg_cameraDidSetup(cameraController:self, toolbarView: toolbarView)
+    }
+    
+    open func jdg_cameraDidSetup(cameraController:JDGCameraController, toolbarView:UIView){
         guard let delegate = self.cameraDelegate else { return }
         delegate.jdg_cameraDidSetup(cameraController: self, toolbarView:toolbarView)
     }
@@ -122,6 +126,11 @@ open class JDGCameraController: UIViewController {
         }
         topToolbarView.translatesAutoresizingMaskIntoConstraints   = true
         topToolbarView.autoresizingMask    = [.flexibleTopMargin, .flexibleRightMargin, .flexibleLeftMargin]
+        
+        jdg_cameraDidSetup(cameraController: self, topToolbarView:toolbarView)
+    }
+    
+    open func jdg_cameraDidSetup(cameraController: JDGCameraController, topToolbarView:UIView){
         guard let delegate = self.cameraDelegate else { return }
         delegate.jdg_cameraDidSetup(cameraController: self, topToolbarView:toolbarView)
     }
@@ -150,8 +159,12 @@ open class JDGCameraController: UIViewController {
         let centerY = toolbarFrame.size.height/2
         btn.center  = CGPoint( x: centerX, y: centerY)
         
+        jdg_cameraDidSetup(cameraController: self, recordButton:btn)
+    }
+    
+    open func jdg_cameraDidSetup(cameraController: JDGCameraController, recordButton: SDRecordButton){
         guard let delegate = self.cameraDelegate else { return }
-        delegate.jdg_cameraDidSetup(cameraController: self, recordButton:btn)
+        delegate.jdg_cameraDidSetup(cameraController: self, recordButton:recordButton)
     }
     
     open override func viewDidLayoutSubviews() {
@@ -182,9 +195,13 @@ open class JDGCameraController: UIViewController {
             flashButton.removeTarget(self, action: nil, for: .allEvents)
             flashButton.addTarget(self, action: #selector(toggleFlash), for: .touchUpInside)
             
-            guard let delegate = self.cameraDelegate else { return }
-            delegate.jdg_cameraDidSetup(cameraController: self, flashButton: flashButton)
+            jdg_cameraDidSetup(cameraController: self, flashButton: flashButton)
         }
+    }
+    
+    open func jdg_cameraDidSetup(cameraController: JDGCameraController, flashButton: UIButton){
+        guard let delegate = self.cameraDelegate else { return }
+        delegate.jdg_cameraDidSetup(cameraController: self, flashButton: flashButton)
     }
     
     @objc private func setupCameraModeButton(){
@@ -204,9 +221,13 @@ open class JDGCameraController: UIViewController {
             cameraModeButton.removeTarget(self, action: nil, for: .allEvents)
             cameraModeButton.addTarget(self, action: #selector(toggleCameraPosition), for: .touchUpInside)
             
-            guard let delegate = self.cameraDelegate else { return }
-            delegate.jdg_cameraDidSetup(cameraController: self, cameraModeButton: cameraModeButton)
+            jdg_cameraDidSetup(cameraController: self, cameraModeButton: cameraModeButton)
         }
+    }
+    
+    open func jdg_cameraDidSetup(cameraController: JDGCameraController, cameraModeButton: UIButton){
+        guard let delegate = self.cameraDelegate else { return }
+        delegate.jdg_cameraDidSetup(cameraController: self, cameraModeButton: cameraModeButton)
     }
     
     @objc private func setupButtonAction(){
