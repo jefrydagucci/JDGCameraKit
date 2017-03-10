@@ -47,7 +47,7 @@ open class JDGCameraController: UIViewController {
     
     private let progressTimeRepeatingValue:CGFloat  = 0.05
     open var maximumRecordingDuration:CGFloat    = 60
-    open var recordingDelay:CGFloat  = 1.5
+    private var recordingDelay:CGFloat  = 1.5
     
     private var currentRecordingProgress:CGFloat  = 0
     
