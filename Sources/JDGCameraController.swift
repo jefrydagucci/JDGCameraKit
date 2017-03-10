@@ -60,7 +60,7 @@ open class JDGCameraController: UIViewController {
     
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: DispatchTime.now().rawValue + (3 * 1000000)), execute: {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: DispatchTime.now().rawValue + (3 * 1000000)), execute: { [unowned self] in
             guard let camera = self.camera else { return }
             camera.start()
         })
@@ -76,9 +76,9 @@ open class JDGCameraController: UIViewController {
     
     //    MARK:Setup
     open func setupCamera(){
-        DispatchQueue.global().asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: DispatchTime.now().rawValue + (1 * 1000000)), execute: {
+        DispatchQueue.global().asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: DispatchTime.now().rawValue + (1 * 1000000)), execute: { [unowned self] in
             LLSimpleCamera.requestPermission { (permitted) in
-                if(permitted){
+                if(permitted){ 
                     if let camera = LLSimpleCamera( quality: AVCaptureSessionPresetMedium, position: LLCameraPositionRear, videoEnabled: true){
                         let bound = UIScreen.main.bounds
                         
