@@ -47,7 +47,7 @@ open class JDGCameraController: UIViewController {
     
     private let progressTimeRepeatingValue:CGFloat  = 0.05
     open var maximumRecordingDuration:CGFloat    = 60
-    open var recordingDelay:CGFloat  = 1.0
+    open var recordingDelay:CGFloat  = 1.5
     
     private var currentRecordingProgress:CGFloat  = 0
     
@@ -307,8 +307,10 @@ open class JDGCameraController: UIViewController {
     }
     
     @objc private func cancelWillStartRecording(){
-        timerLongPress?.invalidate()
-        timerLongPress  = nil
+        DispatchQueue.main.async {
+            self.timerLongPress?.invalidate()
+            self.timerLongPress  = nil
+        }
     }
     
     @objc private func captureLongPress(){
@@ -316,8 +318,8 @@ open class JDGCameraController: UIViewController {
     }
     
     open func capture(){
-        camera?.capture({ (camera:LLSimpleCamera?, image:UIImage?, info:[AnyHashable : Any]?, error:Error?) in
-            
+        camera?.capture({ [unowned self](camera:LLSimpleCamera?, image:UIImage?, info:[AnyHashable : Any]?, error:Error?) in
+            self.endRecording()
             guard let delegate = self.cameraDelegate else{ return }
             delegate.jdg_cameraDidCapture?(cameraController:self, image, info, error)
             
