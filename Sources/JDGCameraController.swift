@@ -58,9 +58,25 @@ open class JDGCameraController: UIViewController {
         self.setupCamera()
     }
     
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: DispatchTime.now().rawValue + (3 * 1000000)), execute: {
+            guard let camera = self.camera else { return }
+            camera.start()
+        })
+    }
+    
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        DispatchQueue.main.async {
+            guard let camera = self.camera else { return }
+            camera.stop()
+        }
+    }
+    
     //    MARK:Setup
     open func setupCamera(){
-        DispatchQueue.global().asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: DispatchTime.now().rawValue + (3 * 1000000)), execute: {
+        DispatchQueue.global().asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: DispatchTime.now().rawValue + (1 * 1000000)), execute: {
             LLSimpleCamera.requestPermission { (permitted) in
                 if(permitted){
                     if let camera = LLSimpleCamera( quality: AVCaptureSessionPresetMedium, position: LLCameraPositionRear, videoEnabled: true){
@@ -69,7 +85,6 @@ open class JDGCameraController: UIViewController {
                         DispatchQueue.main.async {
                             camera.attach(to: self, withFrame: CGRect( x: 0, y: 0, width: bound.size.width, height: bound.size.height))
                             camera.start()
-                            
                             let subview = camera.view
                             subview?.translatesAutoresizingMaskIntoConstraints   = false
                             subview?.pinToEdgesOfSuperview()
