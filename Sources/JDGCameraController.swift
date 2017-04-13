@@ -51,6 +51,14 @@ open class JDGCameraController: UIViewController {
     
     private var currentRecordingProgress:CGFloat  = 0
     
+    open var allowVideo  = true{
+        didSet{
+            if self.isViewLoaded{
+                self.setupButtonAction()
+            }
+        }
+    }
+    
     //    MARK:View
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -247,7 +255,13 @@ open class JDGCameraController: UIViewController {
     @objc private func setupRecordButtonAction(){
         guard let recordButton = recordButton else{ return }
         
-        recordButton.addTarget(self, action: #selector(recordButtonTapDown), for: .touchDown)
+        recordButton.removeTarget(self, action: #selector(recordButtonTapDown), for: .touchDown)
+        recordButton.removeTarget(self, action: #selector(captureOrStopRecord), for: .touchUpInside)
+        recordButton.removeTarget(self, action: #selector(captureOrStopRecord), for: .touchUpOutside)
+        
+        if self.allowVideo{
+            recordButton.addTarget(self, action: #selector(recordButtonTapDown), for: .touchDown)
+        }
         recordButton.addTarget(self, action: #selector(captureOrStopRecord), for: .touchUpInside)
         recordButton.addTarget(self, action: #selector(captureOrStopRecord), for: .touchUpOutside)
     }
